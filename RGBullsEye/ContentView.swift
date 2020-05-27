@@ -47,31 +47,36 @@ struct ContentView: View {
   }
 
   var body: some View {
-    VStack {
-      HStack {
+    NavigationView {
         VStack {
-          Color(red: rTarget, green: gTarget, blue: bTarget)
-          Text("Match this color")
+          HStack {
+            VStack {
+              Color(red: rTarget, green: gTarget, blue: bTarget)
+              Text("Match this color")
+            }
+            VStack {
+              Color(red: rGuess, green: gGuess, blue: bGuess)
+              Text("R: \(Int(rGuess * 255.0))"
+                + "  G: \(Int(gGuess * 255.0))"
+                + "  B: \(Int(bGuess * 255.0))")
+            }
+          }
+          Button(action: { self.showAlert = true }) {
+            Text("Hit Me!")
+          }.alert(isPresented: $showAlert) {
+            Alert(title: Text("Your Score"), message: Text(String(computeScore())))
+          }.padding()
+          VStack {
+            ColorSlider(value: $rGuess, textColor: .red)
+            ColorSlider(value: $gGuess, textColor: .green)
+            ColorSlider(value: $bGuess, textColor: .blue)
+          }.padding(.horizontal)
+            NavigationLink(destination: ViewControllerRepresentation()) {
+                Text("PlayBullsEye")
+            }.padding(.bottom)
         }
-        VStack {
-          Color(red: rGuess, green: gGuess, blue: bGuess)
-          Text("R: \(Int(rGuess * 255.0))"
-            + "  G: \(Int(gGuess * 255.0))"
-            + "  B: \(Int(bGuess * 255.0))")
-        }
-      }
-      Button(action: { self.showAlert = true }) {
-        Text("Hit Me!")
-      }.alert(isPresented: $showAlert) {
-        Alert(title: Text("Your Score"), message: Text(String(computeScore())))
-      }.padding()
-      VStack {
-        ColorSlider(value: $rGuess, textColor: .red)
-        ColorSlider(value: $gGuess, textColor: .green)
-        ColorSlider(value: $bGuess, textColor: .blue)
-      }.padding(.horizontal)
     }
-  }
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
