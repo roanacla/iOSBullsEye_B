@@ -67,9 +67,9 @@ struct ContentView: View {
             Alert(title: Text("Your Score"), message: Text(String(computeScore())))
           }.padding()
           VStack {
-            ColorSlider(value: $rGuess, textColor: .red)
-            ColorSlider(value: $gGuess, textColor: .green)
-            ColorSlider(value: $bGuess, textColor: .blue)
+            ColorSlider(value: $rGuess, textColor: UIColor.red)
+            ColorSlider(value: $gGuess, textColor: UIColor.green)
+            ColorSlider(value: $bGuess, textColor: UIColor.blue)
           }.padding(.horizontal)
             NavigationLink(destination: ViewControllerRepresentation()) {
                 Text("PlayBullsEye")
@@ -88,14 +88,15 @@ struct ContentView_Previews: PreviewProvider {
 
 struct ColorSlider: View {
   @Binding var value: Double
-  var textColor: Color
+  var textColor: UIColor
   var body: some View {
     HStack {
-      Text("0").foregroundColor(textColor)
-      Slider(value: $value)
-        .background(textColor)
-        .cornerRadius(10)
-      Text("255").foregroundColor(textColor)
+      Text("0").foregroundColor(Color(textColor))
+//      Slider(value: $value)
+//        .background(textColor)
+//        .cornerRadius(10)
+      ColorUISlider(color: textColor, value: $value)
+      Text("255").foregroundColor(Color(textColor))
     }
   }
 }
